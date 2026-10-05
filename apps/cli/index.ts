@@ -2,6 +2,7 @@
 import { readFile, readdir, stat } from 'node:fs/promises'
 import { extname, join, relative, resolve } from 'node:path'
 import { formatJsonReport } from '../../packages/reporters/json.js'
+import { formatSarifReport } from '../../packages/reporters/sarif.js'
 import { Scanner } from '../../packages/scanner-core/scanner.js'
 import type { SourceFile } from '../../packages/scanner-core/types.js'
 import { supabaseServiceRoleClientRule, wildcardCorsRule } from '../../packages/rules/index.js'
@@ -29,10 +30,7 @@ async function loadFiles(root: string, directory = root): Promise<SourceFile[]> 
     const metadata = await stat(absolutePath)
     if (metadata.size > maxFileBytes) continue
 
-    files.push({
-      path: relative(root, absolutePath),
-      content: await readFile(absolutePath, 'utf8'),
-    })
+    files.push({ path: relative(root, absolutePath), content: await readFile(absolutePath, 'utf8') })
   }
 
   return files
@@ -42,10 +40,11 @@ async function main(): Promise<void> {
   const args = process.argv.slice(2)
   const command = args[0]
   const json = args.includes('--json')
+  const sarif = args.includes('--sarif')
   const target = args.find((arg, index) => index > 0 && !arg.startsWith('--')) ?? '.'
 
-  if (command !== 'scan') {
-    console.error('Usage: codesentryx scan [directory] [--json]')
+  if (command !== 'scan' || (json && sarif)) {
+    console.error('Usage: codesentryx scan [directory] [--json | --sarif]')
     process.exitCode = 1
     return
   }
@@ -54,11 +53,10 @@ async function main(): Promise<void> {
   const files = await loadFiles(root)
   const findings = new Scanner([wildcardCorsRule, supabaseServiceRoleClientRule]).scan(files)
 
-  if (json) {
-    console.log(formatJsonReport(findings))
-  } else if (findings.length === 0) {
-    console.log('CodeSentryX: no findings.')
-  } else {
+  if (sarif) console.log(formatSarifReport(findings))
+  else if (json) console.log(formatJsonReport(findings))
+  else if (findings.length === 0) console.log('CodeSentryX: no findings.')
+  else {
     for (const finding of findings) {
       const location = finding.line ? `${finding.file}:${finding.line}` : finding.file
       console.log(`[${finding.severity.toUpperCase()}] ${finding.ruleId} — ${location}`)
