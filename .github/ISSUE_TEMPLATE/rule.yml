@@ -1,0 +1,28 @@
+name: Rule proposal
+description: Propose a new defensive scanner rule
+title: "[Rule]: "
+body:
+  - type: input
+    attributes:
+      label: Rule ID
+      placeholder: e.g. supabase/exposed-service-role
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Risk
+      description: What risky pattern should this rule identify?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Detection approach
+      description: Describe precise signals, false-positive risks, and safe evidence.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Remediation
+      description: What should a developer do when this finding appears?
+    validations:
+      required: true
