@@ -6,35 +6,32 @@
   "license": "Apache-2.0",
   "packageManager": "pnpm@10.0.0",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "npm run web:build",
+    "build:cli": "tsc -p tsconfig.json",
     "check": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
-    "web:dev": "vite --config apps/web/vite.config.ts",
-    "web:build": "vite build --config apps/web/vite.config.ts",
-    "prepublishOnly": "pnpm check && pnpm test && pnpm build"
+    "web:dev": "vite --config apps/web/vite.config.mjs",
+    "web:build": "vite build --config apps/web/vite.config.mjs",
+    "prepublishOnly": "pnpm check && pnpm test && pnpm build:cli"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "^4.3.4",
-    "vite": "^6.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "typescript": "^5.7.0",
+    "vite": "^6.0.0",
     "vitest": "^3.0.0"
   },
   "bin": {
     "codesentryx": "dist/apps/cli/index.js"
   },
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
-  ],
+  "files": ["dist", "README.md", "LICENSE"],
   "engines": {
-    "node": ">=22"
+    "node": "22.x"
   }
 }
