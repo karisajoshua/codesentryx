@@ -10,7 +10,8 @@
     "check": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
     "web:dev": "vite --config apps/web/vite.config.ts",
-    "web:build": "vite build --config apps/web/vite.config.ts"
+    "web:build": "vite build --config apps/web/vite.config.ts",
+    "prepublishOnly": "pnpm check && pnpm test && pnpm build"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",
@@ -24,5 +25,16 @@
     "@types/react-dom": "^19.0.0",
     "typescript": "^5.7.0",
     "vitest": "^3.0.0"
+  },
+  "bin": {
+    "codesentryx": "dist/apps/cli/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
   }
 }
