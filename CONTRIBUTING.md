@@ -12,7 +12,7 @@ Thanks for helping build CodeSentryX.
 
 ## Claiming work
 
-Before starting substantial work, leave a comment on the issue saying you would like to work on it. A maintainer can then confirm the assignment. This avoids duplicate implementations. Automated issue claiming is planned, but is not currently enabled.
+Before starting substantial work, comment `/attempt` on the issue. The contributor bot will claim the issue for you when GitHub permits automatic assignment. If GitHub cannot assign you directly, the bot records your claim for maintainer confirmation. Comment `/unassign` if you need to release an issue.
 
 ## Development
 
