@@ -1,0 +1,11 @@
+{
+  "name": "@codesentryx/contributor-bot",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Issue claiming automation for CodeSentryX contributors",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.1"
+  }
+}
