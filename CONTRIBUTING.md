@@ -12,11 +12,13 @@ Thanks for helping build CodeSentryX.
 
 ## Claiming work
 
-Before starting substantial work, comment `/attempt` on the issue. A maintainer can then confirm the assignment. This avoids duplicate implementations.
+Before starting substantial work, leave a comment on the issue saying you would like to work on it. A maintainer can then confirm the assignment. This avoids duplicate implementations. Automated issue claiming is planned, but is not currently enabled.
 
 ## Development
 
 Requirements: Node.js 22+ and pnpm 10+.
+
+Before opening a pull request, run the same core checks expected by CI:
 
 ```bash
 pnpm install
