@@ -39,14 +39,14 @@ function App() {
     <main className="shell">
       <header className="topbar">
         <div><span className="eyebrow">REPOSITORY SECURITY INTELLIGENCE</span><h1>CodeSentryX</h1></div>
-        <label className="importButton">Import scan<input type="file" accept="application/json,.json" onChange={importReport} /></label>
+        <div className="topActions"><button className="githubButton" type="button" disabled title="GitHub App registration required">Continue with GitHub</button><label className="importButton">Import local scan<input type="file" accept="application/json,.json" onChange={importReport} /></label></div>
       </header>
 
       <section className="hero">
         <div>
           <p className="muted">{sourceName}</p>
           <h2>Security posture</h2>
-          <p className="lede">Import JSON generated with <code>codesentryx scan . --json</code>. Reports are processed locally in your browser.</p>
+          <p className="lede">Hosted repository scanning is being connected through a read-only GitHub App. Local JSON reports remain available for private, offline and CI workflows.</p>
           {error && <p className="error" role="alert">{error}</p>}
         </div>
         <div className="score"><strong>{score}</strong><span>/100</span><small>{securityScoreLabel(score)}</small></div>
@@ -58,7 +58,7 @@ function App() {
 
       <section className="workspace">
         <div className="panel findings">
-          <div className="panelHead"><div><span className="eyebrow">IMPORTED SCAN</span><h3>Findings</h3></div><span className="pill">{findings.length} open</span></div>
+          <div className="panelHead"><div><span className="eyebrow">SECURITY SCAN</span><h3>Findings</h3></div><span className="pill">{findings.length} open</span></div>
           {findings.length === 0 ? (
             <div className="empty"><strong>No findings loaded</strong><p>Generate a JSON report with the CLI and import it here to inspect repository security posture.</p></div>
           ) : findings.map((finding, index) => (
