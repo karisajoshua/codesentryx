@@ -1,0 +1,26 @@
+name: Contributor Bot
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  claim:
+    if: github.event.issue.pull_request == null && (github.event.comment.body == '/attempt' || github.event.comment.body == '/unassign')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - working-directory: bots/contributor
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - run: node bots/contributor/index.cjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
